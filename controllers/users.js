@@ -1,9 +1,9 @@
 import { pool } from "../db/pg.js";
 import bcrypt from 'bcrypt'
 
-/* ###################################################################################
-Basic CRUD Operations
-################################################################################### */
+// ###################################################################################
+// Basic CRUD Operations
+// ###################################################################################
 
 
 // Create ----------------------------------------------------------------------------
@@ -52,4 +52,21 @@ export const getUserById = (req, res) => {
 
 // Update ----------------------------------------------------------------------------
 
+export const updateUserDetailsById = (req, res) => {
+    const { id } = req.params;
+    const { forename, lastname } = req.body;
+}
+
+export const setUserInactiveById = (req, res) => {
+
+}
+
 // Delete ----------------------------------------------------------------------------
+
+export const deleteUserById = (req, res) => {
+    const { id } = req.params;
+    pool
+        .query('DELETE FROM users WHERE id = $1', [id])
+        .then(data => res.status(200).json({ message: `user-ID ${id} successfully deleted` }))
+        .catch(err => res.status(500).json({ error: "Internal Server Error" }));
+}
