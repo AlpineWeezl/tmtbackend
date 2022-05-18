@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createNewUser, getAllUsers } from "../controllers/users.js";
+import { createNewUser, getAllUsers, getUserById } from "../controllers/users.js";
 
 // Create Routers ---------------------------------------------------------------------
 export const usersRouter = Router()
@@ -8,9 +8,13 @@ export const usersRouter = Router()
 // Users -----------------------------------------------------------------------------
 
 usersRouter
-.route('/')
-.post(createNewUser)
-.get(getAllUsers)
+    .route('/')
+    .post(createNewUser)
+    .get(getAllUsers)
+
+usersRouter
+    .route('/:id')
+    .get(getUserById)
 
 // Associations ----------------------------------------------------------------------
 // Companies -------------------------------------------------------------------------

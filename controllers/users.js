@@ -26,8 +26,28 @@ export const createNewUser = (req, res) => {
 export const getAllUsers = (req, res) => {
     pool
         .query('SELECT * FROM users')
-        .then(data => res.status(200).json({ users: data.rows }))
+        .then(data => {
+            if (data.rowCount == 0) {
+                res.status(404).json({ error: `no user found` });
+            } else {
+                res.status(200).json({ users: data.rows });
+            }
+        })
         .catch(err => res.status(500).json({ error: err }));
+}
+
+export const getUserById = (req, res) => {
+    const { id } = req.params;
+    pool
+        .query('SELECT * FROM users WHERE id = $1', [id])
+        .then(data => {
+            if (data.rowCount == 0) {
+                res.status(404).json({ error: `cannot find user-ID ${id}` });
+            } else {
+                res.status(200).json({ user: data.rows[0] });
+            }
+        })
+        .catch(err => res.status(500).json({ error: "Internal Server Error" }));
 }
 
 // Update ----------------------------------------------------------------------------
