@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAllUsers } from "../controllers/users";
+import { createNewUser, getAllUsers } from "../controllers/users.js";
 
 // Create Routers ---------------------------------------------------------------------
 export const usersRouter = Router()
@@ -9,7 +9,7 @@ export const usersRouter = Router()
 
 usersRouter
 .route('/')
-.post
+.post(createNewUser)
 .get(getAllUsers)
 
 // Associations ----------------------------------------------------------------------
